@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAAS | Painel Administrativo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="nav-header">
+    <div class="nav-brand">SAAS <span>Agenda</span></div>
+    <nav class="nav-links">
+      <a href="admin.html" class="active">Agendamentos</a>
+      <a href="servicos.html">Serviços</a>
+      <a href="index.html" target="_blank">Ver Site</a>
+      <a href="login.html" style="color: var(--danger);">Sair</a>
+    </nav>
+  </header>
+
+  <main class="container-wide">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <h1 style="font-size: 1.5rem; font-weight:700;">Visão Geral da Agenda</h1>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Controle em tempo real dos seus clientes e receitas</p>
+      </div>
+      <div>
+        <label style="font-size: 0.85rem; font-weight: 600; margin-right: 0.5rem;">Filtrar Data:</label>
+        <input type="date" id="filter-date" class="form-input" style="width: auto; display: inline-block;">
+      </div>
+    </div>
+
+    <!-- Indicadores -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="val" id="stat-total">0</div>
+        <div class="desc">Agendamentos no Dia</div>
+      </div>
+      <div class="stat-card">
+        <div class="val" id="stat-confirmed" style="color: var(--success);">0</div>
+        <div class="desc">Confirmados</div>
+      </div>
+      <div class="stat-card">
+        <div class="val" id="stat-revenue" style="color: #0284c7;">R$ 0,00</div>
+        <div class="desc">Faturamento Estimado</div>
+      </div>
+    </section>
+
+    <!-- Tabela -->
+    <section class="card" style="padding: 0; overflow: hidden;">
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Horário</th>
+              <th>Cliente</th>
+              <th>WhatsApp</th>
+              <th>Serviço</th>
+              <th>Profissional</th>
+              <th>Valor</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="appointments-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

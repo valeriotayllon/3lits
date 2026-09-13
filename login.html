@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAAS | Login Profissional</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body style="display: flex; align-items: center; justify-content: center; min-height: 100vh;">
+
+  <div class="card" style="max-width: 380px; width: 100%; margin: 1rem;">
+    <div style="text-align: center; margin-bottom: 1.5rem;">
+      <span class="brand-badge">SAAS</span>
+      <h1 style="font-size: 1.4rem;">Área Administrativa</h1>
+      <p style="font-size: 0.85rem; color: var(--text-muted);">Acesse o gerenciamento da sua agenda</p>
+    </div>
+
+    <form onsubmit="event.preventDefault(); window.location.href='admin.html';">
+      <div class="form-group">
+        <label>E-mail ou Usuário:</label>
+        <input type="text" class="form-input" value="admin@saas.com" required>
+      </div>
+      <div class="form-group">
+        <label>Senha:</label>
+        <input type="password" class="form-input" value="123456" required>
+      </div>
+      <button type="submit" class="btn-primary">Entrar no Sistema</button>
+    </form>
+
+    <div style="text-align: center; margin-top: 1rem;">
+      <a href="index.html" style="font-size: 0.85rem; color: var(--primary); text-decoration: none;">&larr; Voltar para Agendamento Público</a>
+    </div>
+  </div>
+
+</body>
+</html>

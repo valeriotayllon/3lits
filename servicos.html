@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAAS | Gestão de Serviços</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="nav-header">
+    <div class="nav-brand">SAAS <span>Agenda</span></div>
+    <nav class="nav-links">
+      <a href="admin.html">Agendamentos</a>
+      <a href="servicos.html" class="active">Serviços</a>
+      <a href="index.html" target="_blank">Ver Site</a>
+      <a href="login.html" style="color: var(--danger);">Sair</a>
+    </nav>
+  </header>
+
+  <main class="container-wide">
+    <div style="margin-bottom: 1.5rem;">
+      <h1 style="font-size: 1.5rem; font-weight:700;">Catálogo de Serviços</h1>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">Cadastre valores e durações personalizadas</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1.5rem;" class="service-layout">
+      <!-- Formulário de Criação -->
+      <section class="card">
+        <h2 style="font-size: 1.1rem; margin-bottom: 1rem;">Novo Serviço</h2>
+        <form id="service-form">
+          <div class="form-group">
+            <label for="srv-name">Nome do Serviço:</label>
+            <input type="text" id="srv-name" class="form-input" placeholder="Ex: Corte Degrade" required>
+          </div>
+          <div class="form-group">
+            <label for="srv-price">Preço (R$):</label>
+            <input type="number" step="0.01" id="srv-price" class="form-input" placeholder="40.00" required>
+          </div>
+          <div class="form-group">
+            <label for="srv-duration">Duração (minutos):</label>
+            <input type="number" id="srv-duration" class="form-input" placeholder="30" required>
+          </div>
+          <button type="submit" class="btn-primary">Salvar Serviço</button>
+        </form>
+      </section>
+
+      <!-- Tabela de Serviços -->
+      <section class="card" style="padding: 0; overflow: hidden;">
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Serviço</th>
+                <th>Duração</th>
+                <th>Preço</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="services-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const defaultServices = [
+      { id: 1, name: "Corte de Cabelo", price: 40.0, duration: 30 },
+      { id: 2, name: "Barba & Bigode", price: 30.0, duration: 30 },
+      { id: 3, name: "Combo Cabelo + Barba", price: 65.0, duration: 60 },
+      { id: 4, name: "Design de Sobrancelhas", price: 20.0, duration: 20 }
+    ];
+
+    function loadServices() {
+      const stored = localStorage.getItem("saas_services");
+      return stored ? JSON.parse(stored) : defaultServices;
+    }
+
+    function saveServices(list) {
+      localStorage.setItem("saas_services", JSON.stringify(list));
+      renderServices();
+    }
+
+    function renderServices() {
+      const services = loadServices();
+      const tbody = document.getElementById("services-table-body");
+      tbody.innerHTML = services.map(s => `
+        <tr>
+          <td><strong>${s.name}</strong></td>
+          <td>${s.duration} min</td>
+          <td>R$ ${Number(s.price).toFixed(2)}</td>
+          <td>
+            <button class="btn-danger" onclick="deleteService(${s.id})">Excluir</button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    function deleteService(id) {
+      const services = loadServices().filter(s => s.id !== id);
+      saveServices(services);
+    }
+
+    document.getElementById("service-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const services = loadServices();
+      const newSrv = {
+        id: Date.now(),
+        name: document.getElementById("srv-name").value,
+        price: parseFloat(document.getElementById("srv-price").value),
+        duration: parseInt(document.getElementById("srv-duration").value)
+      };
+      services.push(newSrv);
+      saveServices(services);
+      e.target.reset();
+    });
+
+    renderServices();
+  </script>
+</body>
+</html>
